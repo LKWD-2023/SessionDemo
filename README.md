@@ -12,7 +12,7 @@ Also, to add any arbitrary C# object to session, use the following extension met
     {
         public static void Set<T>(this ISession session, string key, T value)
         {
-            session.SetString(key, JsonConvert.SerializeObject(value));
+            session.SetString(key, JsonSerializer.Serialize(value));
         }
 
         public static T Get<T>(this ISession session, string key)
@@ -20,6 +20,6 @@ Also, to add any arbitrary C# object to session, use the following extension met
             string value = session.GetString(key);
 
             return value == null ? default(T) :
-                JsonConvert.DeserializeObject<T>(value);
+                JsonSerializer.Deserialize<T>(value);
         }
     }
